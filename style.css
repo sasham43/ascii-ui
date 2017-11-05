@@ -1,0 +1,161 @@
+html {
+  font-family: 'Courier New', serif;
+  background-color: #000;
+  color: #228822;
+}
+
+.box {
+  border: dashed 2px #229922;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 8px;
+  display: none;
+}
+
+@keyframes rot {
+	from {
+		transform: rotate(0deg)
+		           translate(-150px)
+		           rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg)
+		           translate(-150px)
+		           rotate(-360deg);
+	}
+}
+
+@keyframes circle {
+  0% {
+    top: 0px;
+    left: 50px;
+  }
+
+  12% {
+    top: 25px;
+    left: 75px;
+  }
+
+  25% {
+    top: 50px;
+    left: 100px;
+  }
+
+  38% {
+    top: 75px;
+    left: 75px;
+  }
+
+  50% {
+    top: 100px;
+    left: 50px;
+  }
+
+  62% {
+    top: 75px;
+    left: 25px;
+  }
+
+  75% {
+    top: 50px;
+    left: 0px;
+  }
+
+  88% {
+    top: 25px;
+    left: 25px;
+  }
+
+  100% {
+    top: 0px;
+    left: 50px;
+  }
+}
+
+@keyframes load1 {
+  from {
+    margin-left: 0px;
+  }
+
+  to {
+    margin-left: 100px;
+  }
+}
+@keyframes load2 {
+  from {
+    margin-left: 20px;
+  }
+
+  to {
+    margin-left: 100px;
+  }
+}
+@keyframes load3 {
+  from {
+    margin-left: 40px;
+  }
+
+  to {
+    margin-left: 100px;
+  }
+}
+
+.mover {
+  animation-timing-function: linear;
+  animation-duration: 1s;
+  /*animation-name: load;*/
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.mover1 {
+  animation-name: load1;
+}
+.mover2 {
+  animation-name: load2;
+  animation-delay: .5s;
+}
+.mover3 {
+  animation-name: load3;
+  animation-delay: 1s;
+}
+
+.loader2 {
+  margin-top: 25%;
+  margin-left: 50%;
+  position: relative;
+}
+
+.circle {
+  position: absolute;
+  animation-timing-function: linear;
+  animation-duration: 3s;
+  animation-name: rot;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.circle2 {
+  position: absolute;
+  animation-timing-function: linear;
+  animation-duration: 3s;
+  animation-name: rot;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 0.5s;
+}
+
+.circle3 {
+  position: absolute;
+  animation-timing-function: linear;
+  animation-duration: 3s;
+  animation-name: rot;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 1s;
+}
+
+/*.underscore {
+  display: inline-block;
+  margin-left: 20px;
+}*/
