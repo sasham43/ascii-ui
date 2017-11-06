@@ -3,6 +3,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var listen = require('./listen.js');
+
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
@@ -13,7 +15,15 @@ io.on('connection', function(socket){
   // console.log('a user connected');
   socket.on('listen', function(msg){
     // io.emit('chat message', msg);
-    console.log('listen')
+    console.log('listen', listen)
+    if(process.env.ENV != 'dev'){
+      listen().then(function(playlist){
+        io.emit('response', {data: playlist})
+      });
+    } else {
+      io.emit('response', {data: 'something'})
+    }
+
   });
 });
 

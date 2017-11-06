@@ -6,24 +6,9 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
-    <script src="/socket.js"></script>
+    <!-- <script src="/socket.js"></script> -->
     <script src="/socket.io-client/socket.io.js"></script>
-    <script>
-    $(function () {
-      // var socket = io.connect('localhost:3000');
-      var socket = io();
-      console.log('connect')
-      $('.button').click(function(){
-        socket.emit('listen');
-        // $('#m').val('');
-        return false;
-      });
-      // socket.on('chat message', function(msg){
-      //   $('#messages').append($('<li>').text(msg));
-      //   window.scrollTo(0, document.body.scrollHeight);
-      // });
-    });
-    </script>
+    <script src="/script.js"></script>
   </head>
   <body>
     <div class="button">
