@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var listen = require('./listen.js');
+var listen = require('./cassette.js');
 
 app.use(express.static('public'));
 
@@ -15,7 +15,7 @@ io.on('connection', function(socket){
   // console.log('a user connected');
   socket.on('listen', function(msg){
     if(process.env.NODE_ENV != 'dev'){
-      listen().then(function(playlist){
+      cassette.listen().then(function(playlist){
         io.emit('response', {
           data: playlist,
           listening: true
