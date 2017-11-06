@@ -15,18 +15,18 @@ html {
 @keyframes rot {
 	from {
 		transform: rotate(0deg)
-		           translate(-150px)
+		           translate(-20px)
 		           rotate(0deg);
 	}
 	to {
 		transform: rotate(360deg)
-		           translate(-150px)
+		           translate(-20px)
 		           rotate(-360deg);
 	}
 }
 
 .button {
-  border: solid 1px #228822;
+  border: solid 5px #228822;
   text-align: center;
   font-size: 40px;
   padding: 3%;
@@ -37,11 +37,30 @@ html {
   color: #000;
 }
 
-.loader2 {
+.button-text {
+  display: inline-block;
+}
+
+.show {
+  display: inline-block;
+}
+
+.hide {
   display: none;
-  margin-top: 25%;
-  margin-left: 50%;
+}
+
+.loader2 {
+  /*display: inline-block;*/
+  /*display: none;*/
+  /*margin-top: 25%;
+  margin-left: 50%;*/
+  font-size: 14px;
   position: relative;
+
+  width: 10px;
+  height: 10px;
+  vertical-align: middle;
+  padding-bottom: 15px;
 }
 
 .circle {

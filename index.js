@@ -16,10 +16,16 @@ io.on('connection', function(socket){
   socket.on('listen', function(msg){
     if(process.env.NODE_ENV != 'dev'){
       listen().then(function(playlist){
-        io.emit('response', {data: playlist})
+        io.emit('response', {
+          data: playlist,
+          listening: true
+        });
       });
     } else {
-      io.emit('response', {data: 'something'})
+      io.emit('response', {
+        data: 'something',
+        listening: true
+      });
     }
 
   });
