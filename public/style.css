@@ -38,6 +38,7 @@ html {
 }
 
 .loader2 {
+  display: none;
   margin-top: 25%;
   margin-left: 50%;
   position: relative;

@@ -14,9 +14,7 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   // console.log('a user connected');
   socket.on('listen', function(msg){
-    // io.emit('chat message', msg);
-    console.log('listen', listen)
-    if(process.env.ENV != 'dev'){
+    if(process.env.NODE_ENV != 'dev'){
       listen().then(function(playlist){
         io.emit('response', {data: playlist})
       });
