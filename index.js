@@ -32,6 +32,13 @@ io.on('connection', function(socket){
     }
 
   });
+
+  socket.on('video', function(data){
+    console.log('data', data.video);
+    cassette.play(data.video).then(function(response){
+      console.log('response', response);
+    });
+  });
 });
 
 

@@ -10,6 +10,25 @@ var r_args = [
   'tape-read.rb'
 ];
 
+module.exports = {
+  listen: listen,
+  play: play
+};
+
+function play(url){
+  var deferred = q.defer();
+  cp.exec('omxplayer \'' + url + '\'', function(err){
+    if(err){
+      console.log('err:', err);
+      deferred.reject(err);
+    }
+
+    deferred.resolve();
+  });
+
+  return deferred.promise;
+}
+
 function listen(){
   var deferred = q.defer();
   var tape = cp.spawn(cmd, r_args);
@@ -200,4 +219,3 @@ console.log('listening...');
 }
 
 // module.exports = listen;
-module.exports.listen = listen;

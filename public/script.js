@@ -1,12 +1,24 @@
 $(function () {
   // var socket = io.connect('localhost:3000');
   var socket = io();
-  console.log('connect')
-  $('.button').click(function(){
+  console.log('connect');
+  var playlist = [];
+  $('.listen-button').click(function(){
     socket.emit('listen');
-    // $('#m').val('');
     return false;
   });
+
+  $('.video-button').click(function(e){
+    console.log('e', e)
+    var classList = $('.video-button').attr('class').split(/\s+/);
+    console.log('classlist:', classList);
+    var index = parseInt(classList[2].replace('video', ''));
+    console.log('index:', index,playlist[index].url, playlist);
+    socket.emit('video', {
+      video: playlist[index].url
+    });
+  });
+
   socket.on('response', function(data){
     console.log('response:', data);
     if(data.listening == true){
@@ -14,10 +26,11 @@ $(function () {
       $('.button-text').html('listening')
     }
     if(data.playlist){
+      playlist = data.playlist;
       hideLoader();
       $('.button-text').html('listen');
 
-      data.playlist.forEach(function(video, index){
+      playlist.forEach(function(video, index){
         $('.video' + index).html(video.title);
         $('.video' + index).removeClass('hide');
         $('.video' + index).removeClass('show');
