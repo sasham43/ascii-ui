@@ -17,7 +17,7 @@ io.on('connection', function(socket){
     if(process.env.NODE_ENV != 'dev'){
       cassette.listen().then(function(playlist){
         io.emit('response', {
-          data: playlist
+          playlist: playlist
         });
       });
 
