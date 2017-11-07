@@ -49,6 +49,22 @@ html {
   display: inline-block;
 }
 
+.title {
+  display: inline-block;
+  width: 49%;
+  font-size: 20px;
+}
+
+.play-button {
+  display: inline-block;
+  width: 50%;
+}
+
+.video-button {
+  display: inline-block;
+  width: auto;
+}
+
 .show {
   display: inline-block;
 }

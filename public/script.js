@@ -3,18 +3,33 @@ $(function () {
   var socket = io();
   console.log('connect');
   var playlist = [];
+  var title = '';
+  var url = '';
+  $('.play-button').click(function(){
+    $('.container').addClass('hide');
+    socket.emit('video', {
+      video: url
+    });
+  });
+
   $('.listen-button').click(function(){
     socket.emit('listen');
     return false;
   });
 
   $('.video-button').click(function(e, f){
-    $('.container').addClass('.hide');
+
+
+    // $('.container').addClass('.hide');
+
     var classList = e.currentTarget.className.split(/\s+/);
     var index = parseInt(classList[2].replace('video', ''));
-    socket.emit('video', {
-      video: playlist[index].url
-    });
+    title = playlist[index].title;
+    url = playlist[index].url;
+    $('.title').html(title);
+    // socket.emit('video', {
+    //   video: playlist[index].url
+    // });
   });
 
   socket.on('response', function(data){
@@ -28,7 +43,7 @@ $(function () {
       $('.button-text').html('listen');
 
       playlist.forEach(function(video, index){
-        $('.video' + index).html(video.title);
+        $('.video' + index).html(index);
         $('.video' + index).removeClass('hide');
         $('.video' + index).removeClass('show');
       })
