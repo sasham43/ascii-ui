@@ -17,6 +17,7 @@ module.exports = {
 
 function play(url){
   var deferred = q.defer();
+
   cp.exec('omxplayer \'' + url + '\'', function(err){
     if(err){
       console.log('err:', err);
@@ -92,6 +93,8 @@ function listen(){
                 }
               });
               playlist.push(item);
+            } else {
+              console.log('not fulfilled:', r);
             }
           });
         } else {

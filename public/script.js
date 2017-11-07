@@ -8,9 +8,10 @@ $(function () {
     return false;
   });
 
-  $('.video-button').click(function(e){
+  $('.video-button').click(function(e, f){
+    console.log('f', f);
     console.log('e', e)
-    var classList = $('.video-button').attr('class').split(/\s+/);
+    var classList = e.currentTarget.className.split(/\s+/);
     console.log('classlist:', classList);
     var index = parseInt(classList[2].replace('video', ''));
     console.log('index:', index,playlist[index].url, playlist);
