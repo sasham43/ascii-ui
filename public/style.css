@@ -2,6 +2,15 @@ html {
   font-family: 'Courier New', serif;
   background-color: #000;
   color: #228822;
+  /*cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238)*/
+}
+
+*:hover {
+  cursor: none;
+}
+
+.container:hover {
+  cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238), none;
 }
 
 .box {
