@@ -35,14 +35,14 @@ io.on('connection', function(socket){
 
   socket.on('video', function(data){
     console.log('data', data.video);
-    // cassette.play(data.video).then(function(response){
-    //   console.log('response', response);
-    //   io.emit('video:done');
-    // });
-    setTimeout(function(){
-      console.log('video done')
+    cassette.play(data.video).then(function(response){
+      console.log('response', response);
       io.emit('video:done');
-    },3000)
+    });
+    // setTimeout(function(){
+    //   console.log('video done')
+    //   io.emit('video:done');
+    // },3000)
   });
 });
 

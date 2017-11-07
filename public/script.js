@@ -56,6 +56,8 @@ $(function () {
   function hideLoader(){
     $('.loader2').removeClass('show');
     $('.loader2').addClass('hide');
+
+    $('.listen-button').addClass('hide');
   }
 
 
