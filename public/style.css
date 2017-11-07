@@ -30,11 +30,19 @@ html {
   text-align: center;
   font-size: 40px;
   padding: 3%;
+  background-color: #000;
+  color: #228822;
+  width: 100%;
+}
+
+.button:focus {
+  outline: none;
 }
 
 .button:active {
   background-color: #228822;
   color: #000;
+  outline: none;
 }
 
 .button-text {
@@ -50,10 +58,7 @@ html {
 }
 
 .loader2 {
-  /*display: inline-block;*/
-  /*display: none;*/
-  /*margin-top: 25%;
-  margin-left: 50%;*/
+  margin-left: 20px;
   font-size: 14px;
   position: relative;
 
