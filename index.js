@@ -37,6 +37,7 @@ io.on('connection', function(socket){
     console.log('data', data.video);
     cassette.play(data.video).then(function(response){
       console.log('response', response);
+      io.emit('video:done');
     });
   });
 });

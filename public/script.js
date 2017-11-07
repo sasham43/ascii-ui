@@ -9,19 +9,15 @@ $(function () {
   });
 
   $('.video-button').click(function(e, f){
-    console.log('f', f);
-    console.log('e', e)
+    $('.container').addClass('.hide');
     var classList = e.currentTarget.className.split(/\s+/);
-    console.log('classlist:', classList);
     var index = parseInt(classList[2].replace('video', ''));
-    console.log('index:', index,playlist[index].url, playlist);
     socket.emit('video', {
       video: playlist[index].url
     });
   });
 
   socket.on('response', function(data){
-    console.log('response:', data);
     if(data.listening == true){
       showLoader();
       $('.button-text').html('listening')
@@ -39,6 +35,9 @@ $(function () {
     }
   });
 
+  socket.on('video:done', function(){
+    $('.container').removeClass('.hide');
+  });
 
   function showLoader(){
     $('.loader2').addClass('show');
