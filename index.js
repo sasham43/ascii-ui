@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var listen = require('./cassette.js');
+var cassette = require('./cassette.js');
 
 app.use(express.static('public'));
 
@@ -17,9 +17,12 @@ io.on('connection', function(socket){
     if(process.env.NODE_ENV != 'dev'){
       cassette.listen().then(function(playlist){
         io.emit('response', {
-          data: playlist,
-          listening: true
+          data: playlist
         });
+      });
+
+      io.emit('response', {
+        listening: true
       });
     } else {
       io.emit('response', {
