@@ -26,9 +26,15 @@ $(function () {
   });
 
   socket.on('response', function(data){
+    console.log('response:', data);
     if(data.listening == true){
       showLoader();
       $('.button-text').html('listening')
+    }
+    if(data.thinking == true){
+      setTimeout(function(){
+        $('.button-text').html('thinking')
+      }, 1000);
     }
     if(data.playlist){
       playlist = data.playlist;

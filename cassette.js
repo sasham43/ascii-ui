@@ -12,7 +12,8 @@ var r_args = [
 
 module.exports = {
   listen: listen,
-  play: play
+  play: play,
+  think: think
 };
 
 function play(url){
@@ -30,11 +31,77 @@ function play(url){
   return deferred.promise;
 }
 
+function think(videos){
+  var d = q.defer();
+  console.log('thinking');
+  var url_promises = [];
+  videos.forEach(function(video){
+    var quote_re = /\"/g;
+    video = video.replace(quote_re, '');
+    video = video.toString().replace(/\r?\n|\r/g, ''); // remove line endings
+    console.log('video', video.length);
+
+    if((video.includes("https://www.youtube.com") && (video.length == 43))){
+      var request = 'youtube-dl -e -f \'worst[ext=mp4]\' -g ' + video;
+      var promise = q.ninvoke(cp, 'exec', request);
+      url_promises.push(promise);
+    }
+  });
+
+  q.allSettled(url_promises).then(function(responses){
+
+    if(responses.length > 0){
+      // console.log('responses:', responses);
+      var playlist = [];
+      var choices = [];
+
+      var item = {};
+
+      responses.forEach(function(r,i){
+        if(r.state == 'fulfilled'){
+          var item = {
+            title: '',
+            url: ''
+          };
+          // var values = r.value.split('\n');
+          r.value.forEach(function(v){
+            if(v != ''){
+              var values = v.split('\n');
+              values.forEach(function(value){
+                if(value.includes('http')){
+                  item.url = value.toString().replace(/\r?\n|\r/g, '');
+                } else if(value.length > 4){
+                  item.title = value.toString().replace(/\r?\n|\r/g, '');
+                  choices.push(value.toString().replace(/\r?\n|\r/g, ''));
+                }
+              });
+            }
+          });
+          playlist.push(item);
+        } else {
+          console.log('not fulfilled:', r);
+        }
+      });
+    } else {
+      listen();
+    }
+
+
+    d.resolve(playlist);
+  })
+  .catch(function(err){
+    console.log('did an oopsie:', err);
+    d.reject(err);
+  });
+
+  return d.promise;
+}
+
 function listen(){
-  var deferred = q.defer();
+  var d = q.defer();
   var tape = cp.spawn(cmd, r_args);
   var playlist = '';
-
+  console.log('listening')
   tape.stdout.on('data', function(data) {
     playlist += data.toString();
   });
@@ -45,72 +112,74 @@ function listen(){
       console.log('playlist',playlist);
 
       videos = playlist.split('\n');
+
+      d.resolve(videos);
       console.log('loading urls...');
-      var url_promises = [];
+      // var url_promises = [];
 
       // get urls that omxplayer can play
-      videos.forEach(function(video){
-        var quote_re = /\"/g;
-        video = video.replace(quote_re, '');
-        video = video.toString().replace(/\r?\n|\r/g, ''); // remove line endings
-        console.log('video', video.length);
-
-        if((video.includes("https://www.youtube.com") && (video.length == 43))){
-          var request = 'youtube-dl -e -f \'worst[ext=mp4]\' -g ' + video;
-          var promise = q.ninvoke(cp, 'exec', request);
-          url_promises.push(promise);
-        }
-      });
+      // videos.forEach(function(video){
+      //   var quote_re = /\"/g;
+      //   video = video.replace(quote_re, '');
+      //   video = video.toString().replace(/\r?\n|\r/g, ''); // remove line endings
+      //   console.log('video', video.length);
+      //
+      //   if((video.includes("https://www.youtube.com") && (video.length == 43))){
+      //     var request = 'youtube-dl -e -f \'worst[ext=mp4]\' -g ' + video;
+      //     var promise = q.ninvoke(cp, 'exec', request);
+      //     url_promises.push(promise);
+      //   }
+      // });
 
       // build playlist, open inquirer, play video
-      q.allSettled(url_promises).then(function(responses){
-
-        if(responses.length > 0){
-          // console.log('responses:', responses);
-          var playlist = [];
-          var choices = [];
-
-          var item = {};
-
-          responses.forEach(function(r,i){
-            if(r.state == 'fulfilled'){
-              var item = {
-                title: '',
-                url: ''
-              };
-              // var values = r.value.split('\n');
-              r.value.forEach(function(v){
-                if(v != ''){
-                  var values = v.split('\n');
-                  values.forEach(function(value){
-                    if(value.includes('http')){
-                      item.url = value.toString().replace(/\r?\n|\r/g, '');
-                    } else if(value.length > 4){
-                      item.title = value.toString().replace(/\r?\n|\r/g, '');
-                      choices.push(value.toString().replace(/\r?\n|\r/g, ''));
-                    }
-                  });
-                }
-              });
-              playlist.push(item);
-            } else {
-              console.log('not fulfilled:', r);
-            }
-          });
-        } else {
-          listen();
-        }
-
-
-        deferred.resolve(playlist);
-    })
-    .catch(function(err){
-      console.log('did an oopsie:', err);
-      deferred.reject(err);
-    });
+    //   q.allSettled(url_promises).then(function(responses){
+    //
+    //     if(responses.length > 0){
+    //       // console.log('responses:', responses);
+    //       var playlist = [];
+    //       var choices = [];
+    //
+    //       var item = {};
+    //
+    //       responses.forEach(function(r,i){
+    //         if(r.state == 'fulfilled'){
+    //           var item = {
+    //             title: '',
+    //             url: ''
+    //           };
+    //           // var values = r.value.split('\n');
+    //           r.value.forEach(function(v){
+    //             if(v != ''){
+    //               var values = v.split('\n');
+    //               values.forEach(function(value){
+    //                 if(value.includes('http')){
+    //                   item.url = value.toString().replace(/\r?\n|\r/g, '');
+    //                 } else if(value.length > 4){
+    //                   item.title = value.toString().replace(/\r?\n|\r/g, '');
+    //                   choices.push(value.toString().replace(/\r?\n|\r/g, ''));
+    //                 }
+    //               });
+    //             }
+    //           });
+    //           playlist.push(item);
+    //         } else {
+    //           console.log('not fulfilled:', r);
+    //         }
+    //       });
+    //     } else {
+    //       listen();
+    //     }
+    //
+    //
+    //     deferred.resolve(playlist);
+    // })
+    // .catch(function(err){
+    //   console.log('did an oopsie:', err);
+    //   deferred.reject(err);
+    // });
   });
 
-  return deferred.promise;
+  return d.promise;
 }
 
 function all(){

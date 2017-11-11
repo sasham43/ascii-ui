@@ -15,9 +15,15 @@ io.on('connection', function(socket){
   // console.log('a user connected');
   socket.on('listen', function(msg){
     if(process.env.NODE_ENV != 'dev'){
-      cassette.listen().then(function(playlist){
+      cassette.listen().then(function(videos){
         io.emit('response', {
-          playlist: playlist
+          thinking: true
+        });
+        console.log('we listended:', videos)
+        cassette.think(videos).then(function(playlist){
+          io.emit('response', {
+            playlist: playlist
+          })
         });
       });
 
