@@ -14,28 +14,24 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   // console.log('a user connected');
   socket.on('listen', function(msg){
-    if(process.env.NODE_ENV != 'dev'){
-      cassette.listen().then(function(videos){
-        io.emit('response', {
-          thinking: true
-        });
-        console.log('we listended:', videos)
-        cassette.think(videos).then(function(playlist){
-          io.emit('response', {
-            playlist: playlist
-          })
-        });
-      });
-
-      io.emit('response', {
-        listening: true
-      });
-    } else {
-      io.emit('response', {
-        data: 'something',
-        listening: true
-      });
-    }
+    // if(process.env.NODE_ENV != 'dev'){
+    //   cassette.listen().then(function(videos){
+    //     io.emit('response', {
+    //       thinking: true
+    //     });
+    //     console.log('we listended:', videos)
+    //     cassette.think(videos).then(function(playlist){
+    //       io.emit('response', {
+    //         playlist: playlist
+    //       })
+    //     });
+    //   });
+    //
+    //   io.emit('response', {
+    //     listening: true
+    //   });
+    // }
+    listen()
 
   });
 
@@ -45,11 +41,30 @@ io.on('connection', function(socket){
       console.log('response', response);
       io.emit('video:done');
     });
-    // setTimeout(function(){
-    //   console.log('video done')
-    //   io.emit('video:done');
-    // },3000)
   });
+
+  function listen(){
+    cassette.listen().then(function(videos){
+        io.emit('response', {
+          thinking: true
+        });
+
+        cassette.think(videos).then(function(data){
+          if(data.worked){
+            console.log('data.playlist', data.playlist)
+            io.emit('response', {
+              playlist: data.playlist
+            });
+          } else {
+            listen();
+          }
+        });
+    });
+
+    io.emit('response', {
+      listening: true
+    });
+  }
 });
 
 

@@ -33,7 +33,8 @@ function play(url){
 
 function think(videos){
   var d = q.defer();
-  console.log('thinking');
+
+  console.log('thinking...');
   var url_promises = [];
   videos.forEach(function(video){
     var quote_re = /\"/g;
@@ -79,15 +80,21 @@ function think(videos){
           });
           playlist.push(item);
         } else {
-          console.log('not fulfilled:', r);
+          // console.log('not fulfilled:', r);
         }
       });
     } else {
-      listen();
+      // listen();
+      d.resolve({
+        worked: false
+      });
     }
 
 
-    d.resolve(playlist);
+    d.resolve({
+      worked: true,
+      playlist: playlist
+    });
   })
   .catch(function(err){
     console.log('did an oopsie:', err);
