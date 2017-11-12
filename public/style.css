@@ -5,6 +5,10 @@ html {
   /*cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238)*/
 }
 
+button {
+  font-family: 'Courier New', serif !important;
+}
+
 *:hover {
   cursor: none;
 }
@@ -72,6 +76,13 @@ html {
 .video-button {
   display: inline-block;
   width: auto;
+}
+
+.listen-button-mini {
+  display: inline-block;
+  width: auto;
+  color: black;
+  background-color: #228822;
 }
 
 .show {

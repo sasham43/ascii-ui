@@ -17,6 +17,12 @@ $(function () {
     return false;
   });
 
+  $('.listen-button-mini').click(function(){
+    showButton('listen-button');
+    socket.emit('listen');
+    return false;
+  });
+
   $('.video-button').click(function(e){
     var classList = e.currentTarget.className.split(/\s+/);
     var index = parseInt(classList[2].replace('video', ''));
@@ -45,7 +51,9 @@ $(function () {
         $('.video' + index).html(index);
         $('.video' + index).removeClass('hide');
         $('.video' + index).removeClass('show');
-      })
+      });
+      $('.listen-button-mini').addClass('show');
+      $('.listen-button-mini').removeClass('hide');
     }
   });
 
@@ -64,6 +72,16 @@ $(function () {
     $('.loader2').addClass('hide');
 
     $('.listen-button').addClass('hide');
+  }
+
+  function showButton(class_name){
+    $('.' + class_name).removeClass('hide');
+    $('.' + class_name).addClass('show');
+  }
+
+  function hideButton(class_name){
+    $('.' + class_name).removeClass('show');
+    $('.' + class_name).addClass('hide');
   }
 
 
