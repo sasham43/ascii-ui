@@ -70,7 +70,14 @@ button {
 
 .play-button {
   display: inline-block;
-  width: 50%;
+  width: 49%;
+  margin-top: 15px;
+}
+
+.listen-button {
+  display: inline-block;
+  width: 49%;
+  margin-top: 15px;
 }
 
 .video-button {

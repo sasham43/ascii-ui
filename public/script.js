@@ -17,11 +17,11 @@ $(function () {
     return false;
   });
 
-  $('.listen-button-mini').click(function(){
-    showButton('listen-button');
-    socket.emit('listen');
-    return false;
-  });
+  // $('.listen-button-mini').click(function(){
+  //   showButton('listen-button');
+  //   socket.emit('listen');
+  //   return false;
+  // });
 
   $('.video-button').click(function(e){
     var classList = e.currentTarget.className.split(/\s+/);
@@ -45,15 +45,15 @@ $(function () {
     if(data.playlist){
       playlist = data.playlist;
       hideLoader();
-      $('.button-text').html('listen');
+      $('.button-text').html('LISTEN');
 
       playlist.forEach(function(video, index){
         $('.video' + index).html(index);
         $('.video' + index).removeClass('hide');
         $('.video' + index).removeClass('show');
       });
-      $('.listen-button-mini').addClass('show');
-      $('.listen-button-mini').removeClass('hide');
+      // $('.listen-button-mini').addClass('show');
+      // $('.listen-button-mini').removeClass('hide');
     }
   });
 
@@ -71,7 +71,7 @@ $(function () {
     $('.loader2').removeClass('show');
     $('.loader2').addClass('hide');
 
-    $('.listen-button').addClass('hide');
+    // $('.listen-button').addClass('hide');
   }
 
   function showButton(class_name){
