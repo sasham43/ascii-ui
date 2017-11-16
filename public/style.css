@@ -64,7 +64,7 @@ button {
 
 .title {
   display: inline-block;
-  width: 49%;
+  /*width: 49%;*/
   font-size: 20px;
 }
 
@@ -78,6 +78,7 @@ button {
   display: inline-block;
   width: 49%;
   margin-top: 15px;
+  position: relative;
 }
 
 .video-button {
@@ -103,7 +104,9 @@ button {
 .loader2 {
   margin-left: 20px;
   font-size: 14px;
-  position: relative;
+  /*position: relative;*/
+  position: absolute;
+  right: 20px;
 
   width: 10px;
   height: 10px;

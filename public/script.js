@@ -52,8 +52,6 @@ $(function () {
         $('.video' + index).removeClass('hide');
         $('.video' + index).removeClass('show');
       });
-      // $('.listen-button-mini').addClass('show');
-      // $('.listen-button-mini').removeClass('hide');
     }
   });
 
@@ -70,8 +68,6 @@ $(function () {
   function hideLoader(){
     $('.loader2').removeClass('show');
     $('.loader2').addClass('hide');
-
-    // $('.listen-button').addClass('hide');
   }
 
   function showButton(class_name){
