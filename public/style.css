@@ -1,17 +1,12 @@
-@font-face {
-  font-family: "Cour";
-  src: url(/cour.ttf) format("truetype");
-}
-
 html {
-  font-family: 'Cour', 'Courier New', serif;
+  font-family: 'VT323', 'Courier New', monospace;
   background-color: #000;
   color: #228822;
   /*cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238)*/
 }
 
 button {
-  font-family: 'Courier New', serif !important;
+  font-family: 'VT323', 'Courier New', monospace;
 }
 
 *:hover {
