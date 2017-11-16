@@ -35,11 +35,11 @@ $(function () {
     console.log('response:', data);
     if(data.listening == true){
       showLoader();
-      $('.button-text').html('listening')
+      $('.button-text').html('LISTENING')
     }
     if(data.thinking == true){
       setTimeout(function(){
-        $('.button-text').html('thinking')
+        $('.button-text').html('THINKING')
       }, 1000);
     }
     if(data.playlist){
