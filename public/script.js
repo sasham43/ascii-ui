@@ -61,13 +61,15 @@ $(function () {
   });
 
   function showLoader(){
-    $('.loader2').addClass('show');
-    $('.loader2').removeClass('hide');
+    // $('.loader2').addClass('show');
+    // $('.loader2').removeClass('hide');
+    $('.button-text').addClass('blink');
   }
 
   function hideLoader(){
-    $('.loader2').removeClass('show');
-    $('.loader2').addClass('hide');
+    // $('.loader2').removeClass('show');
+    // $('.loader2').addClass('hide');
+    $('.button-text').removeClass('blink');
   }
 
   function showButton(class_name){
