@@ -10,11 +10,11 @@ button {
 }
 
 *:hover {
-  cursor: none;
+  /*cursor: none;*/
 }
 
 .container:hover {
-  cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238), none;
+  /*cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238), none;*/
 }
 
 .box {
@@ -103,27 +103,18 @@ button {
 }
 
 @keyframes blink {
-  from {
+  0% {
     opacity: 1;
   }
 
-  to {
+  20% {
+    opacity: 0.99;
+  }
+
+  100% {
     opacity: 0;
   }
 }
-
-/*@keyframes rot {
-	from {
-		transform: rotate(0deg)
-		           translate(-20px)
-		           rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg)
-		           translate(-20px)
-		           rotate(-360deg);
-	}
-}*/
 
 .loader2 {
   margin-left: 20px;
