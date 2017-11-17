@@ -113,13 +113,15 @@ button {
 .controls-container {
   width: 100%;
   height: 14%;
+  text-align: center;
 }
 
+.control-exit-button,
 .control-pause-button,
 .control-play-button {
   padding: 4px;
   display: inline-block;
-  width: 49%;
+  width: 29%;
   font-size: 12px;
   border-width: 2px;
 }

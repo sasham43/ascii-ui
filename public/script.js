@@ -9,8 +9,7 @@ $(function () {
   var controls;
   $('.play-button').click(function(){
     $('.container').addClass('hide');
-    player.removeClass('hide');
-    player.addClass('show');
+    showPlayer();
     controls = $('.controls-container');
     controls.removeClass('hide');
     controls.addClass('show');
@@ -22,6 +21,12 @@ $(function () {
   });
   $('.control-pause-button').click(function(){
     player.get(0).pause();
+  });
+  $('.control-exit-button').click(function(){
+    player.get(0).pause();
+    $('.container').removeClass('hide');
+    $('.container').addClass('show');
+    hidePlayer();
   });
 
   $('.listen-button').click(function(){
@@ -72,6 +77,16 @@ $(function () {
     // console.log('video done')
     $('.container').removeClass('hide');
   });
+
+  function showPlayer(){
+    player.removeClass('hide');
+    player.addClass('show');
+  }
+
+  function hidePlayer(){
+    player.addClass('show');
+    player.removeClass('hide');
+  }
 
   function showLoader(){
     $('.button-text').addClass('blink');
