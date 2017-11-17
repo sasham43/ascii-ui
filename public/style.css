@@ -90,9 +90,22 @@ button {
 }
 
 #player {
-  width: 200px;
-  height: 100px;
+  width: 400px;
+  height: 300px;
+  margin: 0px auto 5px auto;
   border: solid 1px #228822;
+}
+
+.controls-container {
+  width: 100%;
+}
+
+.control-pause-button,
+.control-play-button {
+  padding: 4px;
+  display: inline-block;
+  width: 49%;
+  font-size: 12px;
 }
 
 /*    animations    */

@@ -6,11 +6,22 @@ $(function () {
   var title = '';
   var url = '';
   var player;
+  var controls;
   $('.play-button').click(function(){
     $('.container').addClass('hide');
     player.removeClass('hide');
     player.addClass('show');
+    controls = $('.controls-container');
+    controls.removeClass('hide');
+    controls.addClass('show');
     player.get(0).play();
+  });
+
+  $('.control-play-button').click(function(){
+    player.get(0).play();
+  });
+  $('.control-pause-button').click(function(){
+    player.get(0).pause();
   });
 
   $('.listen-button').click(function(){
