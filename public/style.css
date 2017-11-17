@@ -89,9 +89,13 @@ button {
   display: none;
 }
 
+.video-container {
+  text-align: center;
+}
+
 #player {
   width: 400px;
-  height: 300px;
+  height: 280px;
   margin: 0px auto 5px auto;
   border: solid 1px #228822;
 }
