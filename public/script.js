@@ -81,11 +81,15 @@ $(function () {
   function showPlayer(){
     player.removeClass('hide');
     player.addClass('show');
+    $('.controls-container').addClass('hide');
+    $('.controls-container').removeClass('show');
   }
 
   function hidePlayer(){
-    player.addClass('show');
-    player.removeClass('hide');
+    player.addClass('hide');
+    player.removeClass('show');
+    $('.controls-container').addClass('show');
+    $('.controls-container').removeClass('hide');
   }
 
   function showLoader(){
