@@ -89,6 +89,12 @@ button {
   display: none;
 }
 
+#video {
+  width: 400px;
+  height: 320px;
+  border: solid 1px #228822;
+}
+
 /*    animations    */
 
 .blink {

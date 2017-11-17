@@ -5,11 +5,12 @@ $(function () {
   var playlist = [];
   var title = '';
   var url = '';
+  var player;
   $('.play-button').click(function(){
     $('.container').addClass('hide');
-    socket.emit('video', {
-      video: url
-    });
+    player.removeClass('hide');
+    player.addClass('show');
+    player.get(0).play();
   });
 
   $('.listen-button').click(function(){
@@ -17,18 +18,19 @@ $(function () {
     return false;
   });
 
-  // $('.listen-button-mini').click(function(){
-  //   showButton('listen-button');
-  //   socket.emit('listen');
-  //   return false;
-  // });
-
   $('.video-button').click(function(e){
     var classList = e.currentTarget.className.split(/\s+/);
     var index = parseInt(classList[2].replace('video', ''));
     title = playlist[index].title;
     url = playlist[index].url;
     $('.title').html(title);
+
+    // actual video
+    $('.video-container').html('<video id="player"></video>');
+    player = $('#player');
+    player.addClass('hide');
+    player.attr('src', url);
+
   });
 
   socket.on('response', function(data){
@@ -61,14 +63,10 @@ $(function () {
   });
 
   function showLoader(){
-    // $('.loader2').addClass('show');
-    // $('.loader2').removeClass('hide');
     $('.button-text').addClass('blink');
   }
 
   function hideLoader(){
-    // $('.loader2').removeClass('show');
-    // $('.loader2').addClass('hide');
     $('.button-text').removeClass('blink');
   }
 
