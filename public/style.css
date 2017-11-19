@@ -25,6 +25,7 @@ button {
 
 .container {
   margin: 8px;
+  width: calc(100% - 16px);
 }
 
 .box {
