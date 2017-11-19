@@ -3,6 +3,7 @@ html {
   background-color: #000;
   color: #228822;
   /*cursor: url(https://vignette.wikia.nocookie.net/gaia/images/4/41/200px-Green-dot.svg.png/revision/latest?cb=20120429031238)*/
+  cursor: crosshair;
 }
 
 body {
@@ -15,6 +16,7 @@ button {
 
 *:hover {
   /*cursor: none;*/
+  cursor: crosshair;
 }
 
 .container:hover {

@@ -7,6 +7,7 @@ $(function () {
   var url = '';
   var player;
   var controls;
+  var pages = [];
   $('.play-button').click(function(){
     $('.container').addClass('hide');
     showPlayer();
@@ -34,20 +35,7 @@ $(function () {
     return false;
   });
 
-  $('.video-button').click(function(e){
-    var classList = e.currentTarget.className.split(/\s+/);
-    var index = parseInt(classList[2].replace('video', ''));
-    title = playlist[index].title;
-    url = playlist[index].url;
-    $('.title').html(title);
-
-    // actual video
-    $('.video-container').html('<video id="player"></video>');
-    player = $('#player');
-    player.addClass('hide');
-    player.attr('src', url);
-
-  });
+  // $('.video-button').click();
 
   socket.on('response', function(data){
     console.log('response:', data);
@@ -65,11 +53,27 @@ $(function () {
       hideLoader();
       $('.button-text').html('LISTEN');
 
-      playlist.forEach(function(video, index){
-        $('.video' + index).html(index);
-        $('.video' + index).removeClass('hide');
-        $('.video' + index).removeClass('show');
+      var i,j,temparray,chunk = 5;
+      for (i=0,j=playlist.length; i<j; i+=chunk) {
+          temparray = playlist.slice(i,i+chunk);
+          // do whatever
+          pages.push(temparray);
+      }
+
+      pages[0].forEach(function(video, index){
+        var num = index + 1;
+        $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
+        $('#video-button' + num).addClass("button video-button video" + num);
+        $('#video-button' + num).html(num);
       });
+
+      $('.video-button').on("click", videoButtonHandler);
+
+      // playlist.forEach(function(video, index){
+        // $('.video' + index).html(index);
+        // $('.video' + index).removeClass('hide');
+        // $('.video' + index).removeClass('show');
+      // });
     }
   });
 
@@ -108,6 +112,23 @@ $(function () {
   function hideButton(class_name){
     $('.' + class_name).removeClass('show');
     $('.' + class_name).addClass('hide');
+  }
+
+  function videoButtonHandler(e){
+    var classList = e.currentTarget.className.split(/\s+/);
+    console.log('classList', classList);
+    var index = parseInt(classList[2].replace('video', ''));
+    index = index - 1;
+    title = playlist[index].title;
+    url = playlist[index].url;
+    $('.title').html(title);
+
+    // actual video
+    $('.video-container').html('<video id="player"></video>');
+    player = $('#player');
+    player.addClass('hide');
+    player.attr('src', url);
+
   }
 
 
