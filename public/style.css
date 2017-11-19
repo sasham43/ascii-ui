@@ -91,6 +91,11 @@ button {
   background-color: #228822;
 }
 
+.page-up-button,
+.page-down-button {
+  width: auto;
+}
+
 .show {
   display: inline-block;
 }

@@ -8,6 +8,8 @@ $(function () {
   var player;
   var controls;
   var pages = [];
+  var current_page = 0;
+  var max_pages;
   $('.play-button').click(function(){
     $('.container').addClass('hide');
     showPlayer();
@@ -60,20 +62,25 @@ $(function () {
           pages.push(temparray);
       }
 
-      pages[0].forEach(function(video, index){
-        var num = index + 1;
-        $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
-        $('#video-button' + num).addClass("button video-button video" + num);
-        $('#video-button' + num).html(num);
-      });
+      max_pages = pages.length - 1;
 
-      $('.video-button').on("click", videoButtonHandler);
+      makeVideoButtons(0);
 
-      // playlist.forEach(function(video, index){
-        // $('.video' + index).html(index);
-        // $('.video' + index).removeClass('hide');
-        // $('.video' + index).removeClass('show');
+      // pages[0].forEach(function(video, index){
+      //   var num = index + 1;
+      //   $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
+      //   $('#video-button' + num).addClass("button video-button video" + num);
+      //   $('#video-button' + num).html(num);
       // });
+      //
+      // $('.video-button').on("click", videoButtonHandler);
+
+      $('.page-button').removeClass('hide');
+      $('.page-button').addClass('show');
+
+      $('.page-up-button').on('click', pageUpHandler);
+      $('.page-down-button').on('click', pageDownHandler);
+
     }
   });
 
@@ -92,8 +99,8 @@ $(function () {
   function hidePlayer(){
     player.addClass('hide');
     player.removeClass('show');
-    $('.controls-container').addClass('show');
-    $('.controls-container').removeClass('hide');
+    $('.controls-container').addClass('hide');
+    $('.controls-container').removeClass('show');
   }
 
   function showLoader(){
@@ -128,7 +135,39 @@ $(function () {
     player = $('#player');
     player.addClass('hide');
     player.attr('src', url);
+  }
 
+  function pageUpHandler(){
+    console.log('page', current_page);
+    if(current_page < max_pages){
+      current_page++;
+      makeVideoButtons(current_page);
+    }
+  }
+  function pageDownHandler(){
+    console.log('page dn', current_page);
+    if(current_page > 0){
+      current_page--;
+      makeVideoButtons(current_page);
+    }
+  }
+
+  function makeVideoButtons(current){
+    var mod = current * 5;
+    // current page is 0
+    // mod should be 1
+    // current is 1, mod should be 5
+    // current is 2, mod should be 10
+    console.log('pages', pages[current])
+    $('.video-buttons-container').html('');
+    pages[current].forEach(function(video, index){
+      var num = (index + 1) + mod;
+      $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
+      $('#video-button' + num).addClass("button video-button video" + num);
+      $('#video-button' + num).html(num);
+    });
+
+    $('.video-button').on("click", videoButtonHandler);
   }
 
 
