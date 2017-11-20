@@ -150,7 +150,7 @@ function listen(){
       videos = playlist.split('\n');
 
       d.resolve(videos);
-      console.log('loading urls...');
+      // console.log('loading urls...');
   });
 
   return d.promise;
