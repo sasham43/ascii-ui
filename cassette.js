@@ -24,20 +24,40 @@ function auto(){
   listen().then(function(response){
     console.log('auto:', response);
 
-    response.forEach(function(r){
-      var present = _.find(all_videos, function(video){
-        return video == r;
+    return think(response);
+
+    // response.forEach(function(r){
+    //   var present = _.find(all_videos, function(video){
+    //     return video == r;
+    //   });
+    //
+    //   if(!present){
+    //     all_videos.push(r);
+    //   }
+    // });
+
+    // console.log('all videos length', all_videos.length);
+
+    // auto();
+  })
+  .then(function(response){
+    console.log('auto done thunk:', response);
+
+    if(response.worked){
+      response.playlist.forEach(function(r){
+        var present = _.findWhere(all_videos, {title: r.title});
+
+        if(!present){
+          all_videos.push(r);
+        }
       });
+    }
 
-      if(!present){
-        all_videos.push(r);
-      }
-    });
-
-    console.log('all videos length', all_videos.length);
+    console.log('how many videos do we got?', all_videos.length);
 
     auto();
-  }).catch(function(err){
+  })
+  .catch(function(err){
     console.log('auto err:', err);
   });
 }
