@@ -5,6 +5,8 @@ var q = require('q');
 
 var args = process.argv;
 
+var all_videos = [];
+
 var cmd = 'ruby';
 var r_args = [
   'tape-read.rb'
@@ -13,8 +15,35 @@ var r_args = [
 module.exports = {
   listen: listen,
   play: play,
-  think: think
+  think: think,
+  auto: auto,
+  all_videos: all_videos
 };
+
+function auto(){
+  listen().then(function(response){
+    console.log('auto:', response);
+
+    response.forEach(function(r){
+      var present = _.find(all_videos, function(video){
+        return video == r;
+      });
+
+      if(!present){
+        all_videos.push(r);
+      }
+    });
+
+    console.log('all videos length', all_videos.length);
+
+    listen();
+  }).catch(function(err){
+    console.log('auto err:', err);
+  });
+}
+
+
+
 
 function play(url){
   var deferred = q.defer();
@@ -40,7 +69,7 @@ function think(videos){
     var quote_re = /\"/g;
     video = video.replace(quote_re, '');
     video = video.toString().replace(/\r?\n|\r/g, ''); // remove line endings
-    console.log('video', video.length);
+    // console.log('video', video.length);
 
     if((video.includes("https://www.youtube.com") && (video.length == 43))){
       var request = 'youtube-dl -e -f \'worst[ext=mp4]\' -g ' + video;
@@ -116,7 +145,7 @@ function listen(){
     console.log('error:', error);
   });
   tape.stdout.on('end', function(){
-      console.log('playlist',playlist);
+      // console.log('playlist',playlist);
 
       videos = playlist.split('\n');
 

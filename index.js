@@ -13,26 +13,12 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   // console.log('a user connected');
-  socket.on('listen', function(msg){
-    // if(process.env.NODE_ENV != 'dev'){
-    //   cassette.listen().then(function(videos){
-    //     io.emit('response', {
-    //       thinking: true
-    //     });
-    //     console.log('we listended:', videos)
-    //     cassette.think(videos).then(function(playlist){
-    //       io.emit('response', {
-    //         playlist: playlist
-    //       })
-    //     });
-    //   });
-    //
-    //   io.emit('response', {
-    //     listening: true
-    //   });
-    // }
-    listen()
 
+  cassette.auto();
+
+
+  socket.on('listen', function(msg){
+    listen()
   });
 
   socket.on('video', function(data){
