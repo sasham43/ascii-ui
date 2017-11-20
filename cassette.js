@@ -36,7 +36,7 @@ function auto(){
 
     console.log('all videos length', all_videos.length);
 
-    listen();
+    auto();
   }).catch(function(err){
     console.log('auto err:', err);
   });
