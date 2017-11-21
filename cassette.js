@@ -36,86 +36,92 @@ function think(videos, done){
 
   console.log('thinking...');
   var url_promises = [];
-  videos.forEach(function(video){
-    var quote_re = /\"/g;
-    video = video.replace(quote_re, '');
-    video = video.toString().replace(/\r?\n|\r/g, ''); // remove line endings
-    // console.log('video', video.length);
+  if(videos[0] == ''){
+    videos.forEach(function(video){
+      var quote_re = /\"/g;
+      video = video.replace(quote_re, '');
+      video = video.toString().replace(/\r?\n|\r/g, ''); // remove line endings
+      // console.log('video', video.length);
 
-    if((video.includes("https://www.youtube.com") && (video.length == 43))){
-      var request = 'youtube-dl -e -f \'worst[ext=mp4]\' -g ' + video;
-      var promise = q.ninvoke(cp, 'exec', request);
-      url_promises.push(promise);
-    }
-  });
+      if((video.includes("https://www.youtube.com") && (video.length == 43))){
+        var request = 'youtube-dl -e -f \'worst[ext=mp4]\' -g ' + video;
+        var promise = q.ninvoke(cp, 'exec', request);
+        url_promises.push(promise);
+      }
+    });
 
-  q.allSettled(url_promises).then(function(responses){
+    q.allSettled(url_promises).then(function(responses){
 
-    if(responses.length > 0){
-      // console.log('responses:', responses);
-      var playlist = [];
-      var choices = [];
+      if(responses.length > 0){
+        // console.log('responses:', responses);
+        var playlist = [];
+        var choices = [];
 
-      var item = {};
+        var item = {};
 
-      responses.forEach(function(r,i){
-        if(r.state == 'fulfilled'){
-          var item = {
-            title: '',
-            url: ''
-          };
-          // var values = r.value.split('\n');
-          r.value.forEach(function(v){
-            if(v != ''){
-              var values = v.split('\n');
-              values.forEach(function(value){
-                if(value.includes('http')){
-                  item.url = value.toString().replace(/\r?\n|\r/g, '');
-                } else if(value.length > 4){
-                  item.title = value.toString().replace(/\r?\n|\r/g, '');
-                  choices.push(value.toString().replace(/\r?\n|\r/g, ''));
-                }
-              });
-            }
+        responses.forEach(function(r,i){
+          if(r.state == 'fulfilled'){
+            var item = {
+              title: '',
+              url: ''
+            };
+            // var values = r.value.split('\n');
+            r.value.forEach(function(v){
+              if(v != ''){
+                var values = v.split('\n');
+                values.forEach(function(value){
+                  if(value.includes('http')){
+                    item.url = value.toString().replace(/\r?\n|\r/g, '');
+                  } else if(value.length > 4){
+                    item.title = value.toString().replace(/\r?\n|\r/g, '');
+                    choices.push(value.toString().replace(/\r?\n|\r/g, ''));
+                  }
+                });
+              }
+            });
+            playlist.push(item);
+          } else {
+            // console.log('not fulfilled:', r);
+          }
+        });
+      } else {
+        // listen();
+        if(done){
+          done(null, {
+            worked: false
           });
-          playlist.push(item);
         } else {
-          // console.log('not fulfilled:', r);
+          d.resolve({
+            worked: false
+          });
         }
-      });
-    } else {
-      // listen();
+      }
+
       if(done){
         done(null, {
-          worked: false
+          worked: true,
+          playlist: playlist
         });
       } else {
         d.resolve({
-          worked: false
+          worked: true,
+          playlist: playlist
         });
       }
-    }
-
-    if(done){
-      done(null, {
-        worked: true,
-        playlist: playlist
-      });
-    } else {
-      d.resolve({
-        worked: true,
-        playlist: playlist
-      });
-    }
-  })
-  .catch(function(err){
-    console.log('did an oopsie:', err);
-    if(done){
-      done(err);
-    } else {
-      d.reject(err);
-    }
-  });
+    })
+    .catch(function(err){
+      console.log('did an oopsie:', err);
+      if(done){
+        done(err);
+      } else {
+        d.reject(err);
+      }
+    });
+  } else {
+    d.resolve({
+      worked: false
+    });
+  }
 
   return d.promise;
 }
