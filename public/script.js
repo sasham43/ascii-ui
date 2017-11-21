@@ -183,7 +183,7 @@ $(function () {
     // mod should be 1
     // current is 1, mod should be 5
     // current is 2, mod should be 10
-    console.log('pages', pages[current])
+    // console.log('pages', pages[current])
     $('.video-buttons-container').html('');
     if(pages[current]){
       pages[current].forEach(function(video, index){
