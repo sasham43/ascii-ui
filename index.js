@@ -2,8 +2,11 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var _ = require('underscore');
 
 var port = process.env.PORT || 3000;
+
+var all_videos = [];
 
 var cassette = require('./cassette.js');
 
@@ -16,7 +19,7 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   // console.log('a user connected');
 
-  cassette.auto();
+  auto();
 
 
   socket.on('listen', function(msg){
@@ -30,6 +33,40 @@ io.on('connection', function(socket){
       io.emit('video:done');
     });
   });
+
+
+
+  function auto(){
+    // listen(listen_cb);
+
+    cassette.listen().then(function(response){
+      console.log('auto:', response);
+
+      return cassette.think(response);
+    })
+    .then(function(response){
+      console.log('auto done thunk:', response);
+
+      if(response.worked){
+        response.playlist.forEach(function(r){
+          var present = _.findWhere(all_videos, {title: r.title});
+
+          if(!present){
+            all_videos.push(r);
+          }
+        });
+      }
+
+      console.log('how many videos do we got?', all_videos.length);
+
+      io.emit('videos', all_videos);
+
+      auto();
+    })
+    .catch(function(err){
+      console.log('auto err:', err);
+    });
+  }
 
   function listen(){
     cassette.listen().then(function(videos){

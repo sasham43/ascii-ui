@@ -37,7 +37,19 @@ $(function () {
     return false;
   });
 
-  // $('.video-button').click();
+  socket.on('videos', function(data){
+    console.log('videos:', data);
+
+    data.forEach(function(video){
+      var present = playlist.find(function(p){
+        return p.title == video.title;
+      });
+
+      if(!present){
+        playlist.push(video);
+      }
+    });
+  });
 
   socket.on('response', function(data){
     console.log('response:', data);
@@ -65,15 +77,6 @@ $(function () {
       max_pages = pages.length - 1;
 
       makeVideoButtons(0);
-
-      // pages[0].forEach(function(video, index){
-      //   var num = index + 1;
-      //   $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
-      //   $('#video-button' + num).addClass("button video-button video" + num);
-      //   $('#video-button' + num).html(num);
-      // });
-      //
-      // $('.video-button').on("click", videoButtonHandler);
 
       $('.page-button').removeClass('hide');
       $('.page-button').addClass('show');

@@ -5,8 +5,6 @@ var q = require('q');
 
 var args = process.argv;
 
-var all_videos = [];
-
 var cmd = 'ruby';
 var r_args = [
   'tape-read.rb'
@@ -15,66 +13,8 @@ var r_args = [
 module.exports = {
   listen: listen,
   play: play,
-  think: think,
-  auto: auto,
-  all_videos: all_videos
+  think: think
 };
-
-function listen_cb(err, response){
-  think(response, function(err, response){
-    console.log('auto done thunk:', response);
-
-    if(response.worked){
-      response.playlist.forEach(function(r){
-        var present = _.findWhere(all_videos, {title: r.title});
-
-        if(!present){
-          all_videos.push(r);
-        }
-      });
-    }
-
-    console.log('how many videos do we got?', all_videos.length);
-  });
-
-  console.log('recursing');
-
-  listen(listen_cb);
-}
-
-function auto(){
-
-  // listen(listen_cb);
-
-  listen().then(function(response){
-    console.log('auto:', response);
-
-    return think(response);
-  })
-  .then(function(response){
-    console.log('auto done thunk:', response);
-
-    if(response.worked){
-      response.playlist.forEach(function(r){
-        var present = _.findWhere(all_videos, {title: r.title});
-
-        if(!present){
-          all_videos.push(r);
-        }
-      });
-    }
-
-    console.log('how many videos do we got?', all_videos.length);
-
-    auto();
-  })
-  .catch(function(err){
-    console.log('auto err:', err);
-  });
-}
-
-
-
 
 function play(url){
   var deferred = q.defer();
