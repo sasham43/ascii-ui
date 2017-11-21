@@ -60,7 +60,9 @@ io.on('connection', function(socket){
 
       console.log('how many videos do we got?', all_videos.length);
 
-      io.emit('videos', all_videos);
+      if(all_videos.length > 0){
+        io.emit('videos', all_videos);        
+      }
 
       auto();
     })
