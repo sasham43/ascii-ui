@@ -52,6 +52,7 @@ $(function () {
     });
 
     var i,j,temparray,chunk = 5;
+    pages = [];
     for (i=0,j=playlist.length; i<j; i+=chunk) {
         temparray = playlist.slice(i,i+chunk);
         // do whatever
