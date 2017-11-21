@@ -69,7 +69,8 @@ button {
 
 .play-button {
   display: inline-block;
-  width: 49%;
+  /*width: 49%;*/
+  width: 100%;
   margin-top: 15px;
 }
 
