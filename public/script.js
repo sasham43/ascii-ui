@@ -10,6 +10,7 @@ $(function () {
   var pages = [];
   var current_page = 0;
   var max_pages;
+  var mode = 'control';
   $('.play-button').click(function(){
     $('.container').addClass('hide');
     showPlayer();
@@ -49,6 +50,26 @@ $(function () {
         playlist.push(video);
       }
     });
+
+    var i,j,temparray,chunk = 5;
+    for (i=0,j=playlist.length; i<j; i+=chunk) {
+        temparray = playlist.slice(i,i+chunk);
+        // do whatever
+        pages.push(temparray);
+    }
+    max_pages = pages.length - 1;
+
+    if(mode == 'control'){
+      makeVideoButtons(current_page);
+
+      $('.page-button').removeClass('hide');
+      $('.page-button').addClass('show');
+
+      $('.page-up-button').on('click', pageUpHandler);
+      $('.page-down-button').on('click', pageDownHandler);
+    } else {
+
+    }
   });
 
   socket.on('response', function(data){
