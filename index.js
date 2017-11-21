@@ -38,7 +38,7 @@ io.on('connection', function(socket){
 
   function auto(){
     // listen(listen_cb);
-
+    var new_videos = 0;
     cassette.listen().then(function(response){
       console.log('auto:', response);
 
@@ -53,6 +53,7 @@ io.on('connection', function(socket){
 
           if(!present){
             console.log('pushing:', r.title);
+            new_videos++;
             all_videos.push(r);
           }
         });
@@ -60,8 +61,8 @@ io.on('connection', function(socket){
 
       console.log('how many videos do we got?', all_videos.length);
 
-      if(all_videos.length > 0){
-        io.emit('videos', all_videos);        
+      if(all_videos.length > 0 && new_videos > 0){
+        io.emit('videos', all_videos);
       }
 
       auto();

@@ -59,6 +59,7 @@ $(function () {
     }
     max_pages = pages.length - 1;
     console.log('max pages:', max_pages);
+    console.log('pages:', pages);
 
     if(mode == 'control'){
       makeVideoButtons(current_page);
@@ -68,8 +69,6 @@ $(function () {
 
       $('.page-up-button').on('click', pageUpHandler);
       $('.page-down-button').on('click', pageDownHandler);
-    } else {
-
     }
   });
 
