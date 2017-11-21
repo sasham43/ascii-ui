@@ -58,6 +58,7 @@ $(function () {
         pages.push(temparray);
     }
     max_pages = pages.length - 1;
+    console.log('max pages:', max_pages);
 
     if(mode == 'control'){
       makeVideoButtons(current_page);
