@@ -184,14 +184,16 @@ $(function () {
     // current is 2, mod should be 10
     console.log('pages', pages[current])
     $('.video-buttons-container').html('');
-    pages[current].forEach(function(video, index){
-      var num = (index + 1) + mod;
-      $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
-      $('#video-button' + num).addClass("button video-button video" + num);
-      $('#video-button' + num).html(num);
-    });
+    if(pages[current]){
+      pages[current].forEach(function(video, index){
+        var num = (index + 1) + mod;
+        $('.video-buttons-container').append('<button id="video-button' + num + '"></button>');
+        $('#video-button' + num).addClass("button video-button video" + num);
+        $('#video-button' + num).html(num);
+      });
 
-    $('.video-button').on("click", videoButtonHandler);
+      $('.video-button').on("click", videoButtonHandler);
+    }
   }
 
 
