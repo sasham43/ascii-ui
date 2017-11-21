@@ -36,7 +36,8 @@ function think(videos, done){
 
   console.log('thinking...');
   var url_promises = [];
-  if(videos[0] == ''){
+  if(videos && (videos[0] != '')){
+    console.log('trying')
     videos.forEach(function(video){
       var quote_re = /\"/g;
       video = video.replace(quote_re, '');
@@ -118,6 +119,7 @@ function think(videos, done){
       }
     });
   } else {
+    console.log('not trying', videos && (videos[0] == ''))
     d.resolve({
       worked: false
     });
@@ -128,6 +130,7 @@ function think(videos, done){
 
 function listen(done){
   var d = q.defer();
+
   var tape = cp.spawn(cmd, r_args);
   var playlist = '';
   console.log('listening')
