@@ -20,25 +20,36 @@ module.exports = {
   all_videos: all_videos
 };
 
+function listen_cb(err, response){
+  think(response, function(err, response){
+    console.log('auto done thunk:', response);
+
+    if(response.worked){
+      response.playlist.forEach(function(r){
+        var present = _.findWhere(all_videos, {title: r.title});
+
+        if(!present){
+          all_videos.push(r);
+        }
+      });
+    }
+
+    console.log('how many videos do we got?', all_videos.length);
+  });
+
+  console.log('recursing');
+
+  listen(listen_cb);
+}
+
 function auto(){
+
+  // listen(listen_cb);
+
   listen().then(function(response){
     console.log('auto:', response);
 
     return think(response);
-
-    // response.forEach(function(r){
-    //   var present = _.find(all_videos, function(video){
-    //     return video == r;
-    //   });
-    //
-    //   if(!present){
-    //     all_videos.push(r);
-    //   }
-    // });
-
-    // console.log('all videos length', all_videos.length);
-
-    // auto();
   })
   .then(function(response){
     console.log('auto done thunk:', response);
@@ -80,7 +91,7 @@ function play(url){
   return deferred.promise;
 }
 
-function think(videos){
+function think(videos, done){
   var d = q.defer();
 
   console.log('thinking...');
@@ -134,26 +145,42 @@ function think(videos){
       });
     } else {
       // listen();
-      d.resolve({
-        worked: false
-      });
+      if(done){
+        done(null, {
+          worked: false
+        });
+      } else {
+        d.resolve({
+          worked: false
+        });
+      }
     }
 
-
-    d.resolve({
-      worked: true,
-      playlist: playlist
-    });
+    if(done){
+      done(null, {
+        worked: true,
+        playlist: playlist
+      });
+    } else {
+      d.resolve({
+        worked: true,
+        playlist: playlist
+      });
+    }
   })
   .catch(function(err){
     console.log('did an oopsie:', err);
-    d.reject(err);
+    if(done){
+      done(err);
+    } else {
+      d.reject(err);
+    }
   });
 
   return d.promise;
 }
 
-function listen(){
+function listen(done){
   var d = q.defer();
   var tape = cp.spawn(cmd, r_args);
   var playlist = '';
@@ -169,7 +196,11 @@ function listen(){
 
       videos = playlist.split('\n');
 
-      d.resolve(videos);
+      if(done){
+        done(null, videos);
+      } else {
+        d.resolve(videos);
+      }
       // console.log('loading urls...');
   });
 
