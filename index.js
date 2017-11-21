@@ -42,7 +42,11 @@ io.on('connection', function(socket){
     cassette.listen().then(function(response){
       console.log('auto:', response);
 
-      return cassette.think(response);
+      if(response[0] == ''){
+        auto();
+      } else {
+        return cassette.think(response);
+      }
     })
     .then(function(response){
       console.log('auto done thunk:', response);
