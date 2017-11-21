@@ -52,6 +52,7 @@ io.on('connection', function(socket){
           var present = _.findWhere(all_videos, {title: r.title});
 
           if(!present){
+            console.log('pushing:', r.title);
             all_videos.push(r);
           }
         });
